@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block content %}
+<div class="container mt-4">
+  <h3>Counselor Dashboard</h3>
+  <h5>Assigned to me</h5>
+  <ul>{% for r in my_reports %}<li>{{ r.created_at }} - {{ r.status }} - {{ r.description|truncatewords:10 }}</li>{% empty %}<li>No assigned reports.</li>{% endfor %}</ul>
+  <h5>Unassigned Inbox</h5>
+  <ul>{% for r in inbox %}<li>{{ r.created_at }} - {{ r.status }} - {{ r.description|truncatewords:10 }}</li>{% empty %}<li>No new reports.</li>{% endfor %}</ul>
+</div>
+{% endblock %}

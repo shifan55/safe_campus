@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% block content %}
+<div class="container mt-4">
+  <h3>Admin Dashboard</h3>
+  <p>Total Reports: <strong>{{ total_reports }}</strong></p>
+  <canvas id="chart" width="400" height="200"></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const data = {{ chart_json|safe }};
+  const ctx = document.getElementById('chart').getContext('2d');
+  new Chart(ctx, { type:'pie', data: {labels: data.labels, datasets: data.datasets}, options: {responsive:true} });
+</script>
+{% endblock %}

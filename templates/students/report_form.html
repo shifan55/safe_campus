@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h3>Report an Incident</h3>
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label>Description</label>
+      <textarea name="description" class="form-control" rows="5" required></textarea>
+    </div>
+    <input type="hidden" name="location_lat" id="location_lat">
+    <input type="hidden" name="location_lng" id="location_lng">
+    <div id="map" style="height: 360px;" class="mb-3"></div>
+    <button class="btn btn-primary">Submit</button>
+  </form>
+</div>
+<script>
+  function initMap(){
+    const center = {lat: 6.9271, lng: 79.8612};
+    const map = new google.maps.Map(document.getElementById('map'), {zoom: 14, center:center});
+    let marker = new google.maps.Marker({position:center, map, draggable:true});
+    function updateInputs(pos){ 
+      document.getElementById('location_lat').value = pos.lat();
+      document.getElementById('location_lng').value = pos.lng();
+    }
+    google.maps.event.addListener(marker, 'dragend', function(){ updateInputs(marker.getPosition()); });
+    updateInputs(marker.getPosition());
+  }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&callback=initMap"></script>
+{% endblock %}

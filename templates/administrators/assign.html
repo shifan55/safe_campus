@@ -1,0 +1,18 @@
+{% extends "base.html" %}{% block content %}
+<div class="container mt-4">
+  <h3>Assign Report #{{ report.id }}</h3>
+  <p>{{ report.description }}</p>
+  <form method="post">{% csrf_token %}
+    <div class="mb-3">
+      <label>Select Counselor</label>
+      <select class="form-select" name="counselor_id" required>
+        <option value="">-- choose --</option>
+        {% for c in counselors %}
+        <option value="{{ c.id }}">{{ c.get_full_name|default:c.username }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button class="btn btn-primary">Assign</button>
+  </form>
+</div>
+{% endblock %}
